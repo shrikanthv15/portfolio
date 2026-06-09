@@ -13,6 +13,17 @@
   --font-display: var(--font-bricolage), Georgia, serif;
   --font-body: var(--font-public-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* "expensive" easing — the Apple/PS5 feel */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-ios-spring: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-soft: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* body bg/color tween smoothly when chapters shift the palette */
+html {
+  transition: background-color 0.8s var(--ease-soft);
 }
 
 :root {
@@ -113,6 +124,52 @@ body {
   line-height: 0.72;
   padding: 0.06em 0.12em 0 0;
   color: var(--color-signal);
+}
+
+/* ---- native scroll-progress bar (compositor thread, zero JS) ---- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  z-index: 70;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: var(--color-signal);
+  animation: progress-grow linear both;
+  animation-timeline: scroll(root);
+}
+@keyframes progress-grow {
+  to {
+    transform: scaleX(1);
+  }
+}
+@supports not (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: none;
+  }
+}
+
+/* ---- kinetic type helpers ---- */
+/* SplitText injects per-line/char spans; this keeps masked lines clipped. */
+.kinetic .split-line {
+  overflow: hidden;
+}
+/* variable-font axis we can animate on scroll (Bricolage is variable) */
+.vf {
+  font-variation-settings: "wght" var(--wght, 800), "opsz" var(--opsz, 40);
+}
+
+/* hint the compositor for the pinned hero zoom */
+.will-zoom {
+  will-change: transform, opacity, filter;
+  transform-origin: 50% 42%;
+}
+
+/* magnetic / interactive affordance */
+.magnetic {
+  will-change: transform;
 }
 
 /* honor reduced motion globally as a safety net */

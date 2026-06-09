@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Public_Sans, Geist_Mono } from "next/font/google";
+import { MotionConfig } from "motion/react";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import { profile } from "@/lib/content";
@@ -66,7 +67,10 @@ export default function RootLayout({
       className={`${display.variable} ${body.variable} ${mono.variable}`}
     >
       <body className="grain min-h-dvh">
-        <SmoothScroll>{children}</SmoothScroll>
+        <div className="scroll-progress" aria-hidden />
+        <MotionConfig reducedMotion="user">
+          <SmoothScroll>{children}</SmoothScroll>
+        </MotionConfig>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
