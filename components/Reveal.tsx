@@ -12,7 +12,7 @@ type RevealProps = {
   immediate?: boolean;
 };
 
-const EASE = [0.2, 0.65, 0.3, 1] as const;
+const EASE = [0.16, 1, 0.3, 1] as const; // ease-out-expo — the "expensive" curve
 
 /**
  * Scroll-reveal wrapper. Animates when scrolled into view, OR after a short

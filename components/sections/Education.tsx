@@ -1,5 +1,6 @@
 import { SectionShell, FieldLabel } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
+import Kinetic from "@/components/Kinetic";
 import { education, achievements } from "@/lib/content";
 
 /**
@@ -13,11 +14,9 @@ export default function Education() {
     <SectionShell id="education" className="py-24 sm:py-32">
       <FieldLabel>FIELD NOTE 05 — FOUNDATIONS</FieldLabel>
 
-      <Reveal>
-        <h2 className="display-lg max-w-[18ch]">
-          Where the <span className="text-signal">groundwork</span> was laid.
-        </h2>
-      </Reveal>
+      <Kinetic as="h2" className="display-lg max-w-[18ch]">
+        Where the <span className="text-signal">groundwork</span> was laid.
+      </Kinetic>
 
       {/* The ledger */}
       <div className="mt-14 sm:mt-20">
