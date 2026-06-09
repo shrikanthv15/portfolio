@@ -8,6 +8,8 @@ import Education from "@/components/sections/Education";
 import Skills from "@/components/sections/Skills";
 import Colophon from "@/components/sections/Colophon";
 import AgentEasterEgg from "@/components/AgentEasterEgg";
+import CursorRoot from "@/components/CursorRoot";
+import Mascot from "@/components/mascot/Mascot";
 
 export default function Home() {
   return (
@@ -24,6 +26,8 @@ export default function Home() {
         <Colophon />
       </main>
       <AgentEasterEgg />
+      <CursorRoot />
+      <Mascot />
     </>
   );
 }

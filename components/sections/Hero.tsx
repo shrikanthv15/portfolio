@@ -6,6 +6,8 @@ import { motion, useScroll, useTransform, useReducedMotion } from "motion/react"
 import { profile, about } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
 import Kinetic from "@/components/Kinetic";
+import Typewriter from "@/components/Typewriter";
+import Magnetic from "@/components/Magnetic";
 import HeartbeatPill from "@/components/HeartbeatPill";
 
 const HeroGrain = dynamic(() => import("@/components/HeroGrain"), { ssr: false });
@@ -45,6 +47,8 @@ export default function Hero() {
 
         <motion.div
           style={zoomStyle}
+          data-mascot-platform
+          data-mascot-key="top"
           className="will-zoom relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center"
         >
           {/* journal masthead */}
@@ -78,7 +82,23 @@ export default function Hero() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.44} className="measure mt-6" immediate>
+          {/* rotating typewriter identity line — the one deliberate typing moment */}
+          <Reveal delay={0.42} className="mt-5" immediate>
+            <p className="font-mono text-sm text-muted sm:text-[0.95rem]">
+              <span className="text-signal">▸</span> currently building{" "}
+              <Typewriter
+                className="text-ink"
+                phrases={[
+                  "agentic mortgage systems",
+                  "multi-agent pipelines",
+                  "production AI, not demos",
+                  "things that ship while I sleep",
+                ]}
+              />
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.5} className="measure mt-6" immediate>
             <p className="text-lg text-muted">{about.lede}</p>
           </Reveal>
 
@@ -87,19 +107,23 @@ export default function Hero() {
             className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-4"
             immediate
           >
-            <a
-              href="#work"
-              className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-transform hover:-translate-y-0.5"
-            >
-              See the work
-              <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
-            </a>
-            <a
-              href={profile.resumeUrl}
-              className="inline-flex items-center gap-2 rounded-full border border-ink/25 px-6 py-3 text-sm font-medium transition-colors hover:border-ink"
-            >
-              Résumé <span aria-hidden>↓</span>
-            </a>
+            <Magnetic>
+              <a
+                href="#work"
+                className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-transform hover:-translate-y-0.5"
+              >
+                See the work
+                <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+              </a>
+            </Magnetic>
+            <Magnetic>
+              <a
+                href={profile.resumeUrl}
+                className="inline-flex items-center gap-2 rounded-full border border-ink/25 px-6 py-3 text-sm font-medium transition-colors hover:border-ink"
+              >
+                Résumé <span aria-hidden>↓</span>
+              </a>
+            </Magnetic>
             <HeartbeatPill />
           </Reveal>
         </motion.div>

@@ -172,6 +172,154 @@ body {
   will-change: transform;
 }
 
+/* ---- typewriter caret ---- */
+.tw-caret {
+  display: inline-block;
+  width: 0.62ch;
+  margin-left: 0.04em;
+  background: var(--color-signal);
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+@keyframes caret-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* ---- custom ink cursor ---- */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  will-change: transform;
+  transition: width 0.25s var(--ease-out-expo), height 0.25s var(--ease-out-expo),
+    margin 0.25s var(--ease-out-expo), background-color 0.25s ease;
+}
+.cursor-dot--lg {
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  background: var(--color-signal);
+}
+/* hide native cursor only once the custom one is live (JS-gated = safe fallback) */
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor a,
+  html.has-cursor button {
+    cursor: none;
+  }
+}
+
+/* ---- agent terminal ---- */
+.terminal {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+.terminal .prompt {
+  color: var(--color-signal);
+  user-select: none;
+}
+
+/* ---- Inkling mascot ---- */
+.ink-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+}
+.ink-root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  will-change: transform;
+}
+.ink-figure {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+  transform: scaleX(var(--face, 1));
+}
+.ink-sprite {
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 4px 6px rgba(27, 26, 23, 0.12));
+}
+.eye-lid {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.08s ease;
+}
+.ink-figure.is-blink .eye-lid {
+  transform: scaleY(0.1);
+}
+.pupil {
+  transition: transform 0.12s ease-out;
+}
+.ink-pencil {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.ink-pose {
+  transform-origin: 50% 88%;
+}
+.ink-pose[data-pose="idle"] { animation: ink-bob 3.2s ease-in-out infinite; }
+.ink-pose[data-pose="walk"] { animation: ink-bob 0.5s ease-in-out infinite; }
+.ink-pose[data-pose="climb"] { animation: ink-climb 0.42s ease-in-out infinite; }
+.ink-pose[data-pose="dangle"] { transform-origin: 50% 8%; animation: ink-dangle 2.4s ease-in-out infinite; }
+.ink-pose[data-pose="jump"] { animation: ink-jump 0.42s cubic-bezier(0.16, 1, 0.3, 1); }
+.ink-pose[data-pose="think"] { animation: ink-bob 3.2s ease-in-out infinite; }
+.ink-pose[data-pose="think"] .ink-pencil { opacity: 1; }
+
+@keyframes ink-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes ink-climb { 0%, 100% { transform: rotate(-9deg) translateY(0); } 50% { transform: rotate(-9deg) translateY(-3px); } }
+@keyframes ink-dangle { 0%, 100% { transform: rotate(6deg); } 50% { transform: rotate(-6deg); } }
+@keyframes ink-jump { 0% { transform: translateY(0) scaleY(1); } 30% { transform: translateY(-13px) scaleY(1.12); } 65% { transform: translateY(0) scaleY(0.92); } 100% { transform: translateY(0) scaleY(1); } }
+
+.ink-bubble {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  right: -4px;
+  width: max-content;
+  max-width: 210px;
+  padding: 8px 11px;
+  border-radius: 13px 13px 13px 4px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(6px) scale(0.9);
+  transform-origin: bottom right;
+  transition: opacity 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
+  pointer-events: none;
+}
+.ink-bubble.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+.ink-bubble__tail { position: absolute; top: calc(100% - 2px); right: 14px; }
+.ink-bubble__tail i {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--color-ink);
+}
+.ink-bubble__tail i:first-child { width: 6px; height: 6px; top: 0; right: 0; }
+.ink-bubble__tail i:last-child { width: 3.5px; height: 3.5px; top: 7px; right: -3px; }
+
 /* honor reduced motion globally as a safety net */
 @media (prefers-reduced-motion: reduce) {
   *,
