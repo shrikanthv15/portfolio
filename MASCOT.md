@@ -1,46 +1,58 @@
-# Inkling — the mascot (how to edit / re-skin)
+# Kratos — the companion robot (how it works / how to edit)
 
-"Inkling" is Shrikanth's field-note companion: a small SVG doodle that rides the
-right edge of whichever section is in view, climbs/hops/dangles as you scroll,
-tracks the cursor with its eyes, and pops a thought bubble on click (or idly, as
-it "notes things down"). Built deliberately modular — **art, behaviour, and
-personality are three separate files** so you can change any one without the
-others.
+"Kratos" is Shrikanth's top orchestrator agent, reimagined as a small companion
+robot that lives on the page. He rides the right edge of whichever section is in
+view (climbing/hopping/dangling as you scroll), tracks the cursor with his eye,
+and — when you **click him** — starts a **scroll-driven monologue**: a docked
+chat thread where he "texts" you a guided tour, one contextual beat per section,
+opening with the running billion-dollar gag.
+
+Built deliberately modular — **art / locomotion / behaviour / dialogue are
+separate** so any one can change without the others.
 
 ```
 components/mascot/
-  Mascot.tsx          engine: rAF loop, DOM-platform detection, pose FSM, cursor tracking
-  MascotSprite.tsx    the ART — pure SVG. Re-skin the whole character here.
-  ThoughtBubble.tsx   the speech/thought bubble (pure CSS)
-  mascot.config.ts    the PERSONALITY — all tunables + what it "thinks" per section
+  KratosCompanion.tsx   wires the pet + the dialogue thread together (mount this)
+  Mascot.tsx            LOCOMOTION engine: rAF loop, DOM-platform detection, poses,
+                        cursor-tracking eye, self-heals on layout change (ResizeObserver)
+  MascotSprite.tsx      the ART — detailed robot SVG (named groups, CSS-var palette).
+                        Re-skin the whole character here.
+  mascot.config.ts      pet tunables (perch, lerp, blink/wander timing) + Pose type
+  dialogue.config.ts    the SCRIPT — Kratos's monologue, keyed by section id
+  useDialogueTour.ts    tour state machine: queue + typing pacing, skip/replay/dismiss,
+                        back-fills skipped sections so the story stays coherent
+  useSectionDriver.ts   IntersectionObserver that pushes each section's beats on scroll
+                        (decoupled from the pet's animation loop = robust)
+  CompanionThread.tsx   the docked chat UI (aria-live log, controls)
 ```
 
-## Edit the personality (no code)
-`components/mascot/mascot.config.ts`:
-- `THOUGHTS` — what it says, keyed by section id (`top`, `who`, `machine`, `work`,
-  `experience`, `education`, `contact`, `default`). Add/edit lines freely.
-- `MASCOT` — knobs: `lerp` (floatiness), `edgeInset`, `clampTop/Bottom` (where it
-  perches), `wanderRadius`, blink/bubble timing.
+## Edit the script (no code)
+`dialogue.config.ts` → `TOUR`: keys match each section's `data-mascot-key`
+(`top`, `who`, `machine`, `work`, `experience`, `education`, `contact`). Add/edit
+beats freely. `top` = the intro that fires on click.
 
-## Re-skin the character (swap the art)
-Edit `components/mascot/MascotSprite.tsx` — it's plain SVG. Keep these class hooks
-so the engine can still drive it:
-- `.pupil` (×2) — the engine translates these to track the cursor
-- `.eye-lid` (×2) — scaled to blink
-- `.ink-pencil` — shown in the `think` pose
-- root `.ink-sprite`
-Want a cat / Batman / a different blob? Replace the paths inside, keep the hooks.
-To use pixel art or a Rive file instead, swap `MascotSprite` for a sprite/Rive
-renderer — the engine only needs `.pupil`/`.eye-lid` hooks + a `[data-pose]` host.
+## Re-skin Kratos (swap the art)
+`MascotSprite.tsx` is plain SVG. Keep the engine hooks: `.pupil` (catchlight the
+engine moves toward the cursor), `.eye-lid` (blink), the named groups
+(`.k-head/.k-torso/.k-antenna/.k-arm-*/.k-scanline/.k-spec`) that the idle CSS
+animates, and `.ink-pose` (carries `data-pose`). Palette is CSS vars (`--k-*` on
+`.ink-overlay` in globals.css) — retheme by changing those.
 
-## Where it can walk
-Any element with `data-mascot-platform` (+ optional `data-mascot-key="<id>"`) is a
-ledge it rides. Currently every `SectionShell` and the hero are tagged.
+## Tune behaviour / personality
+- Pet motion: `mascot.config.ts` (perch position, floatiness, blink/wander cadence).
+- Idle "alive" micro-loops + poses: the `.k-*` / `.ink-pose[data-pose]` rules in
+  `app/globals.css` (desynchronized coprime periods so it never visibly repeats).
+- Dialogue pacing: `useDialogueTour.ts` (typing delay, gaps).
 
-## Make a section talk to it
-Set `data-mascot-key="something"` on a platform and add a matching `THOUGHTS.something`.
+## Where it walks / talks
+Any element with `data-mascot-platform` + `data-mascot-key="<id>"` is both a ledge
+Kratos rides and a dialogue trigger. Every `SectionShell` and the hero are tagged.
 
-## Accessibility / perf
-Auto-disabled on touch + `prefers-reduced-motion`; pauses when the tab is hidden;
-60fps via direct DOM writes (no React re-renders in the loop). The clickable sprite
-is a real `<button>` with an aria-label; the bubble is an `aria-live` region.
+## Accessibility / perf / architecture notes
+- Off on touch + `prefers-reduced-motion` (snaps, no autonomous motion); pauses
+  when the tab is hidden. Engine uses direct DOM writes (no per-frame React renders).
+- The dialogue thread is **non-modal**: `role="log"` + `aria-live="polite"`, never
+  traps focus, dismissible (button + Escape), resumable, with skip/replay.
+- Research verdict (2026): hand-SVG + CSS/GSAP beats Rive here (Rive = ~200KB WASM,
+  can't inherit the CSS-var palette) and three.js is overkill for a 2D DOM pet.
+  Physics (matter.js) only worth adding later for a true swing/dangle state.

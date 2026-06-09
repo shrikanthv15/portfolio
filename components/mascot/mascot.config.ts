@@ -29,4 +29,4 @@ export const THOUGHTS: Record<string, string[]> = {
   default: ["noting things down ✎", "still watching…", "hmm, interesting"],
 };
 
-export type Pose = "idle" | "walk" | "climb" | "dangle" | "jump" | "think";
+export type Pose = "idle" | "walk" | "climb" | "dangle" | "jump" | "think" | "talk";
