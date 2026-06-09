@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Decrypt from "@/components/Decrypt";
 
 /**
  * Shared editorial primitives. Every "Field Note" section is built from these
@@ -25,7 +26,10 @@ export function SectionShell({
         className,
       ].join(" ")}
     >
-      <div className="mx-auto w-full max-w-6xl">{children}</div>
+      {/* the mascot rides the right edge of this container */}
+      <div className="mx-auto w-full max-w-6xl" data-mascot-platform data-mascot-key={id}>
+        {children}
+      </div>
     </section>
   );
 }
@@ -52,7 +56,7 @@ export function FieldLabel({
           inverted ? "bg-paper/30" : "bg-rule",
         ].join(" ")}
       />
-      {children}
+      {typeof children === "string" ? <Decrypt text={children} /> : children}
     </p>
   );
 }

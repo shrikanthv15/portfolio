@@ -2,14 +2,7 @@ import { machine } from "@/lib/content";
 import { SectionShell, FieldLabel } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import Kinetic from "@/components/Kinetic";
-
-const ROSTER: [string, string][] = [
-  ["Kratos", "orchestrator — routes goals"],
-  ["Loki", "scout — gathers signal"],
-  ["Mimir", "publisher — writes & ships"],
-  ["Hermes", "archivist — keeps the books"],
-  ["Justice League", "build agents — ship code"],
-];
+import AgentTerminal from "@/components/AgentTerminal";
 
 export default function Machine() {
   return (
@@ -51,14 +44,7 @@ export default function Machine() {
               </span>
               agent roster — live
             </p>
-            <ul className="space-y-4 font-mono text-sm">
-              {ROSTER.map(([name, role]) => (
-                <li key={name} className="flex flex-col gap-0.5">
-                  <span className="text-paper">{name}</span>
-                  <span className="text-paper/45">{role}</span>
-                </li>
-              ))}
-            </ul>
+            <AgentTerminal />
             <p className="mt-6 border-t border-paper/10 pt-4 font-mono text-xs text-paper/40">
               A2A over Google ADK · brokered by OpenClaw · running on a DigitalOcean VPS
             </p>
