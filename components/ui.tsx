@@ -52,7 +52,7 @@ export function FieldLabel({
       <span
         aria-hidden
         className={[
-          "h-px w-8",
+          "fl-rule h-px w-8",
           inverted ? "bg-paper/30" : "bg-rule",
         ].join(" ")}
       />

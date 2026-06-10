@@ -1,6 +1,15 @@
 import { SectionShell, FieldLabel, Tag } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import { experience } from "@/lib/content";
+import CountUp from "@/components/CountUp";
+
+// Measured outcomes pulled from the résumé — the numbers tick up on scroll.
+const STATS: { value: number; prefix?: string; suffix: string; label: string }[] = [
+  { value: 35, suffix: "%", label: "faster clinical review" },
+  { value: 90, suffix: "%+", label: "queries resolved autonomously" },
+  { value: 100, suffix: "+", label: "diagnostic reports parsed" },
+  { value: 11, suffix: "", label: "agents running in production" },
+];
 
 /**
  * Field Note 04 — Track record.
@@ -21,6 +30,22 @@ export default function Experience() {
           slideware.{" "}
           <span className="text-muted">A few of the rooms I&apos;ve built in.</span>
         </p>
+      </Reveal>
+
+      {/* measured outcomes — numerals count up on first view */}
+      <Reveal delay={0.1}>
+        <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 border-y border-rule py-8 sm:mt-14 lg:grid-cols-4">
+          {STATS.map((s) => (
+            <div key={s.label}>
+              <dd className="font-display text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
+                <CountUp value={s.value} prefix={s.prefix} suffix={s.suffix} />
+              </dd>
+              <dt className="mt-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-muted">
+                {s.label}
+              </dt>
+            </div>
+          ))}
+        </dl>
       </Reveal>
 
       {/* The hairline. Entries hang off it; the dot marks each one. */}
