@@ -405,6 +405,118 @@ body {
 }
 .ktour__btn:hover { color: var(--color-ink); border-color: var(--color-ink); }
 
+/* ---- field-label hairline draws in as it enters view (native, zero JS) ---- */
+@supports (animation-timeline: view()) {
+  .fl-rule {
+    transform-origin: left center;
+    animation: fl-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 80%;
+  }
+}
+@keyframes fl-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* ---- Field Note 03 — the project card file ---- */
+.pcard-grid {
+  perspective: 1600px;
+}
+.pcard {
+  position: relative;
+  min-height: 340px;
+  cursor: pointer;
+  outline: none;
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.45s var(--ease-out-expo);
+  will-change: transform;
+}
+.pcard:hover,
+.pcard:focus-visible {
+  transform: rotate(0deg) translateY(-7px);
+  z-index: 2;
+}
+.pcard:focus-visible .pcard__inner {
+  box-shadow: 0 0 0 2px var(--color-signal), 0 18px 40px rgba(27, 26, 23, 0.16);
+}
+.pcard__inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.7s var(--ease-out-expo), box-shadow 0.45s ease;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(27, 26, 23, 0.08), 0 10px 26px rgba(27, 26, 23, 0.07);
+}
+.pcard:hover .pcard__inner {
+  box-shadow: 0 2px 4px rgba(27, 26, 23, 0.08), 0 22px 44px rgba(27, 26, 23, 0.14);
+}
+.pcard.is-flipped .pcard__inner {
+  transform: rotateY(180deg);
+}
+.pcard__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 22px 18px 30px;
+  border-radius: 6px;
+  border: 1px solid var(--color-rule);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  /* index-card paper: ruled feint lines + a vermilion margin line */
+  background-color: #faf7ef;
+  background-image:
+    linear-gradient(to right, transparent 21px, rgba(214, 67, 36, 0.28) 21px, rgba(214, 67, 36, 0.28) 22px, transparent 22px),
+    repeating-linear-gradient(to bottom, transparent 0, transparent 27px, rgba(27, 26, 23, 0.05) 27px, rgba(27, 26, 23, 0.05) 28px);
+}
+.pcard__back {
+  transform: rotateY(180deg);
+}
+.pcard__tape {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 74px;
+  height: 20px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(46, 74, 69, 0.12);
+  border-left: 1px dashed rgba(27, 26, 23, 0.12);
+  border-right: 1px dashed rgba(27, 26, 23, 0.12);
+  backdrop-filter: blur(1px);
+}
+.pcard__hint {
+  opacity: 0.55;
+  transition: opacity 0.25s ease;
+}
+.pcard:hover .pcard__hint {
+  opacity: 1;
+}
+.pcard__stamp {
+  position: absolute;
+  top: 16px;
+  right: 14px;
+  padding: 3px 9px;
+  border: 1.6px solid currentColor;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  transform: rotate(7deg);
+  opacity: 0.75;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='30'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0.1'/%3E%3CfeComposite operator='in' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
+}
+.pcard__stamp--live { color: var(--color-signal); }
+.pcard__stamp--production { color: var(--color-archival); }
+.pcard__stamp--research { color: var(--color-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pcard { transform: none; }
+  .pcard:hover, .pcard:focus-visible { transform: none; }
+}
+
 /* honor reduced motion globally as a safety net */
 @media (prefers-reduced-motion: reduce) {
   *,

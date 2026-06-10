@@ -42,44 +42,88 @@ export const machine = {
   ],
 };
 
-export type Project = {
+// ── Field Note 03 — the card file ─────────────────────────────────────────
+// Six index cards dealt out of the journal's card file. `face` is the short
+// hook on the front; `back` is the detail revealed on flip.
+export type ProjectCard = {
+  no: string;
   title: string;
   year: string;
-  blurb: string;
+  stamp: "LIVE" | "PRODUCTION" | "RESEARCH";
+  face: string;
+  back: string;
   outcome?: string;
   stack: string[];
   href?: string;
   hrefLabel?: string;
 };
 
-export const projects: Project[] = [
+export const projectCards: ProjectCard[] = [
   {
-    title: "The Pantheon — Autonomous A2A Newsroom",
+    no: "01",
+    title: "The Pantheon",
     year: "2026",
-    blurb:
-      "A real-time agent-to-agent newsroom where autonomous agents publish articles, monitor live feeds, and surface oracle data with no human trigger. Agents run 24/7 on a DigitalOcean VPS via OpenClaw + Hermes, communicating over Google ADK's A2A protocol and self-correcting around the clock.",
-    outcome: "Live in production. OpenClaw brokers task envelopes between Kratos, Loki, Mimir & Hermes into one auditable shared schema.",
-    stack: ["Next.js", "Supabase", "OpenClaw", "Hermes", "Google ADK / A2A", "DigitalOcean", "Vercel"],
+    stamp: "LIVE",
+    face: "An autonomous A2A newsroom — agents publish articles around the clock with no human trigger.",
+    back: "Kratos orchestrates, Loki scouts, Mimir writes and publishes, Hermes keeps the books. OpenClaw brokers structured task envelopes between them over Google ADK's A2A protocol, self-correcting 24/7 on a DigitalOcean VPS.",
+    outcome: "Live in production — the same agent team helped build this site.",
+    stack: ["Next.js", "OpenClaw", "A2A / ADK", "Supabase", "DigitalOcean"],
     href: "https://pantheon.twoby2.dev",
     hrefLabel: "pantheon.twoby2.dev",
   },
   {
-    title: "Git Gardener — Agentic Repo Intelligence",
+    no: "02",
+    title: "Agentic Loan Origination",
     year: "2026",
-    blurb:
-      "Connect any GitHub repo and get a full health analysis with an LLM-generated reorganisation plan. A FastAPI backend decomposes each repo into a Temporal activity chain that classifies files, scores complexity, and ranks a cleanup roadmap by impact — with automatic retries and per-repo drill-down.",
-    outcome: "Temporal-powered ingestion with GitHub OAuth; results persisted in Postgres via SQLAlchemy.",
-    stack: ["Next.js", "FastAPI", "Python", "PostgreSQL", "SQLAlchemy", "Temporal.io", "Docker"],
+    stamp: "PRODUCTION",
+    face: "A multi-tenant mortgage platform — borrower application to underwriting decision, run by agents.",
+    back: "AI document review, income verification, and underwriting decisioning behind role-specific portals, with ULDD compliance export and multi-investor rate pricing. Four MCP servers handle document retrieval, data extraction, and encrypted multi-party email; Temporal makes every stage durable and recoverable.",
+    outcome: "Shipped end-to-end at Confer Solutions AI.",
+    stack: ["Next.js", "Temporal.io", "LangGraph", "MCP", "Supabase", "BullMQ"],
+  },
+  {
+    no: "03",
+    title: "StoneFactory ERP",
+    year: "2026",
+    stamp: "PRODUCTION",
+    face: "A full manufacturing ERP — sales to production planning to inventory — with a field-team PWA.",
+    back: "Sales orders, purchasing, CRM, production planning, inventory and wastage tracking, multi-level approvals — plus a React Native PWA giving factory field teams real-time production access from the floor.",
+    outcome: "Second production platform shipped at Confer Solutions AI.",
+    stack: ["Next.js", "Fastify", "Drizzle", "Redis", "Turborepo", "React Native"],
+  },
+  {
+    no: "04",
+    title: "Git Gardener",
+    year: "2026",
+    stamp: "LIVE",
+    face: "Connect a repo, get an LLM-generated reorganisation plan ranked by impact.",
+    back: "A FastAPI backend decomposes each repo into a Temporal activity chain that classifies files, scores complexity, and ranks a cleanup roadmap — automatic retries, per-repo drill-down, GitHub OAuth, results persisted in Postgres.",
+    outcome: "Temporal-powered ingestion, live at gardener.twoby2.dev.",
+    stack: ["FastAPI", "Temporal.io", "Next.js", "PostgreSQL", "Docker"],
     href: "https://gardener.twoby2.dev",
     hrefLabel: "gardener.twoby2.dev",
   },
   {
+    no: "05",
+    title: "Clinical Intake AI",
+    year: "2025",
+    stamp: "PRODUCTION",
+    face: "Agentic patient intake for a longevity imaging centre — forms to follow-ups, no manual handoff.",
+    back: "Agents extract and structure form data, run eligibility checks, and send automated follow-ups. A document-intelligence layer runs diagnostic reports through an LLM pipeline with standardised terminology and an interactive Q&A interface.",
+    outcome: "~35% faster review; 90%+ of queries resolved autonomously across 100+ reports.",
+    stack: ["LangGraph", "LangChain", "Ollama", "Next.js", "Supabase", "Python"],
+  },
+  {
+    no: "06",
     title: "Diffusion / DiT Anomaly Detection",
     year: "2025",
-    blurb:
-      "Industrial surface-defect detection on the MVTec AD dataset using a modular diffusion / DiT-style model — a reproducible training pipeline with custom anomaly scoring and config-driven experiment management.",
-    stack: ["Python", "PyTorch", "Conda", "MVTec AD", "UMD DATA612"],
+    stamp: "RESEARCH",
+    face: "Industrial surface-defect detection on MVTec AD with a modular diffusion / DiT pipeline.",
+    back: "A reproducible training pipeline with custom anomaly scoring and config-driven experiment management — diffusion-based reconstruction error against DiT-style backbones for defect localisation.",
+    outcome: "Graduate research, UMD DATA612.",
+    stack: ["PyTorch", "Python", "MVTec AD", "Conda"],
     href: "https://github.com/shrikanthv15",
+    hrefLabel: "github.com/shrikanthv15",
   },
 ];
 
