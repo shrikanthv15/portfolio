@@ -45,9 +45,23 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     let cleanup = () => {};
     wire();
 
+    // Recalculate every ScrollTrigger after fonts load + SplitText re-wraps
+    // (which shifts layout). Without this, triggers below the fold keep stale
+    // start positions and fire on load instead of on scroll. Refresh again on
+    // full load and after a settle delay to catch late layout shifts.
+    const refresh = () => ScrollTrigger.refresh();
+    const timers: number[] = [];
+    if (typeof document !== "undefined" && document.fonts?.ready) {
+      document.fonts.ready.then(() => requestAnimationFrame(refresh));
+    }
+    window.addEventListener("load", refresh);
+    timers.push(window.setTimeout(refresh, 900), window.setTimeout(refresh, 2200));
+
     return () => {
       cancelAnimationFrame(frame);
       cleanup();
+      window.removeEventListener("load", refresh);
+      timers.forEach(clearTimeout);
     };
   }, [reduce]);
 

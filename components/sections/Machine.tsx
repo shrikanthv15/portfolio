@@ -1,7 +1,7 @@
 import { machine } from "@/lib/content";
 import { SectionShell, FieldLabel } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
-import Kinetic from "@/components/Kinetic";
+import InkText from "@/components/InkText";
 import AgentTerminal from "@/components/AgentTerminal";
 
 export default function Machine() {
@@ -11,7 +11,7 @@ export default function Machine() {
 
       <div className="grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <Kinetic as="h2" className="display-lg" text={machine.title} />
+          <InkText as="h2" className="display-lg" tone="paper" text={machine.title} />
           <div className="mt-9 space-y-6">
             {machine.body.map((p, i) => (
               <Reveal key={i} delay={0.06 * i} className="measure">

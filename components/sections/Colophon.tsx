@@ -1,17 +1,17 @@
 import { profile } from "@/lib/content";
 import { SectionShell, FieldLabel } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
-import Kinetic from "@/components/Kinetic";
+import InkText from "@/components/InkText";
 
 export default function Colophon() {
   return (
     <SectionShell id="contact" className="py-28 sm:py-36">
       <FieldLabel>Colophon — Get in touch</FieldLabel>
 
-      <Kinetic as="h2" className="display-lg max-w-[16ch]">
+      <InkText as="h2" className="display-lg max-w-[16ch]">
         Let&apos;s build something that{" "}
         <span className="text-signal">runs itself.</span>
-      </Kinetic>
+      </InkText>
 
       <Reveal delay={0.1} className="mt-10 flex flex-wrap gap-x-10 gap-y-4 text-lg">
         <a href={`mailto:${profile.email}`} className="link-signal">
