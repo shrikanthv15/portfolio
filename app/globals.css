@@ -10,9 +10,10 @@
   --color-archival: #2e4a45;
   --color-inkdeep: #16150f;
 
-  --font-display: var(--font-bricolage), Georgia, serif;
-  --font-body: var(--font-public-sans), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--ff-display), Georgia, serif;
+  --font-body: var(--ff-body), system-ui, sans-serif;
+  --font-mono: var(--ff-mono), ui-monospace, monospace;
+  --font-hand: var(--ff-hand), "Segoe Print", "Comic Sans MS", cursive;
 
   /* "expensive" easing — the Apple/PS5 feel */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -88,10 +89,10 @@ body {
 /* fluid display scale */
 .display-xl {
   font-family: var(--font-display);
-  font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: -0.025em;
-  font-size: clamp(2.75rem, 9vw, 9rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  font-size: clamp(2.9rem, 9.4vw, 9.5rem);
 }
 .display-lg {
   font-family: var(--font-display);
@@ -118,7 +119,7 @@ body {
 /* drop cap for chapter intros */
 .dropcap::first-letter {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: 700;
   float: left;
   font-size: 3.6em;
   line-height: 0.72;
@@ -420,101 +421,98 @@ body {
   }
 }
 
-/* ---- Field Note 03 — the project card file ---- */
-.pcard-grid {
-  perspective: 1600px;
-}
-.pcard {
-  position: relative;
-  min-height: 340px;
-  cursor: pointer;
-  outline: none;
-  transform: rotate(var(--tilt, 0deg));
-  transition: transform 0.45s var(--ease-out-expo);
-  will-change: transform;
-}
-.pcard:hover,
-.pcard:focus-visible {
-  transform: rotate(0deg) translateY(-7px);
-  z-index: 2;
-}
-.pcard:focus-visible .pcard__inner {
-  box-shadow: 0 0 0 2px var(--color-signal), 0 18px 40px rgba(27, 26, 23, 0.16);
-}
-.pcard__inner {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  transition: transform 0.7s var(--ease-out-expo), box-shadow 0.45s ease;
-  border-radius: 6px;
-  box-shadow: 0 1px 2px rgba(27, 26, 23, 0.08), 0 10px 26px rgba(27, 26, 23, 0.07);
-}
-.pcard:hover .pcard__inner {
-  box-shadow: 0 2px 4px rgba(27, 26, 23, 0.08), 0 22px 44px rgba(27, 26, 23, 0.14);
-}
-.pcard.is-flipped .pcard__inner {
-  transform: rotateY(180deg);
-}
-.pcard__face {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 22px 22px 18px 30px;
-  border-radius: 6px;
-  border: 1px solid var(--color-rule);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  overflow: hidden;
-  /* index-card paper: ruled feint lines + a vermilion margin line */
-  background-color: #faf7ef;
-  background-image:
-    linear-gradient(to right, transparent 21px, rgba(214, 67, 36, 0.28) 21px, rgba(214, 67, 36, 0.28) 22px, transparent 22px),
-    repeating-linear-gradient(to bottom, transparent 0, transparent 27px, rgba(27, 26, 23, 0.05) 27px, rgba(27, 26, 23, 0.05) 28px);
-}
-.pcard__back {
-  transform: rotateY(180deg);
-}
-.pcard__tape {
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  width: 74px;
-  height: 20px;
-  transform: translateX(-50%) rotate(-2deg);
-  background: rgba(46, 74, 69, 0.12);
-  border-left: 1px dashed rgba(27, 26, 23, 0.12);
-  border-right: 1px dashed rgba(27, 26, 23, 0.12);
-  backdrop-filter: blur(1px);
-}
-.pcard__hint {
-  opacity: 0.55;
-  transition: opacity 0.25s ease;
-}
-.pcard:hover .pcard__hint {
-  opacity: 1;
-}
-.pcard__stamp {
-  position: absolute;
-  top: 16px;
-  right: 14px;
-  padding: 3px 9px;
+/* ---- project stamp (rubber-stamp status in the rail) ---- */
+.pstamp {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 2px 9px;
   border: 1.6px solid currentColor;
   border-radius: 4px;
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.22em;
-  transform: rotate(7deg);
-  opacity: 0.75;
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='30'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0.1'/%3E%3CfeComposite operator='in' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
+  transform: rotate(-4deg);
+  opacity: 0.8;
 }
-.pcard__stamp--live { color: var(--color-signal); }
-.pcard__stamp--production { color: var(--color-archival); }
-.pcard__stamp--research { color: var(--color-muted); }
+.pstamp--live { color: var(--color-signal); }
+.pstamp--production { color: var(--color-archival); }
+.pstamp--research { color: var(--color-muted); }
 
+/* ---- handwritten project notes ---- */
+.pnotes {
+  position: relative;
+  margin-top: 2.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 16px;
+  padding-top: 0.5rem;
+}
+.pnote-wrap {
+  display: block;
+}
+.pnote {
+  position: relative;
+  width: 200px;
+  min-height: 104px;
+  padding: 16px 15px 14px;
+  background: #fbf8f1;
+  border: 1px solid var(--color-rule);
+  border-radius: 3px;
+  transform: rotate(var(--n-tilt, 0deg));
+  transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s ease;
+  box-shadow: 0 1px 1px rgba(27, 26, 23, 0.05), 0 8px 18px rgba(27, 26, 23, 0.08);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 25px,
+    rgba(27, 26, 23, 0.05) 25px,
+    rgba(27, 26, 23, 0.05) 26px
+  );
+}
+.pnote:hover {
+  transform: rotate(0deg) translateY(-6px);
+  box-shadow: 0 3px 4px rgba(27, 26, 23, 0.06), 0 18px 34px rgba(27, 26, 23, 0.16);
+  z-index: 3;
+}
+.pnote__tape {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 56px;
+  height: 16px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgba(46, 74, 69, 0.14);
+  border-left: 1px dashed rgba(27, 26, 23, 0.12);
+  border-right: 1px dashed rgba(27, 26, 23, 0.12);
+}
+.pnote__tag {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-signal);
+  margin-bottom: 4px;
+}
+.pnote__text {
+  font-family: var(--font-hand);
+  font-size: 1.18rem;
+  line-height: 1.18;
+  color: var(--color-ink);
+}
+.pnotes__pencil {
+  position: absolute;
+  right: 6px;
+  bottom: -10px;
+  width: 120px;
+  height: auto;
+  opacity: 0.92;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 3px rgba(27, 26, 23, 0.12));
+}
 @media (prefers-reduced-motion: reduce) {
-  .pcard { transform: none; }
-  .pcard:hover, .pcard:focus-visible { transform: none; }
+  .pnote { transform: none; }
+  .pnote:hover { transform: translateY(-4px); }
 }
 
 /* honor reduced motion globally as a safety net */

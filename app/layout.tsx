@@ -1,25 +1,9 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Public_Sans, Geist_Mono } from "next/font/google";
 import { MotionConfig } from "motion/react";
 import "./globals.css";
+import { display, body, mono, hand } from "./fonts";
 import SmoothScroll from "@/components/SmoothScroll";
 import { profile } from "@/lib/content";
-
-const display = Bricolage_Grotesque({
-  variable: "--font-bricolage",
-  subsets: ["latin"],
-  display: "swap",
-});
-const body = Public_Sans({
-  variable: "--font-public-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-const mono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://shrikanthv.vercel.app";
 
@@ -64,7 +48,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable} ${mono.variable}`}
+      className={`${display.variable} ${body.variable} ${mono.variable} ${hand.variable}`}
     >
       <body className="grain min-h-dvh">
         <div className="scroll-progress" aria-hidden />
