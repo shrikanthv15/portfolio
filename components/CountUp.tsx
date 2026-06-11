@@ -29,8 +29,8 @@ export default function CountUp({
     const el = ref.current;
     if (!el) return;
     if (prefersReducedMotion()) {
-      setDisplay(value);
-      return;
+      const timer = window.setTimeout(() => setDisplay(value), 0);
+      return () => clearTimeout(timer);
     }
     // Timer-poll instead of IntersectionObserver: IO + rAF + scroll events are
     // all suspended in hidden/throttled tabs, but timers still run — so the

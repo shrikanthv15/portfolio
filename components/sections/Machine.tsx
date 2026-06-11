@@ -3,11 +3,13 @@ import { SectionShell, FieldLabel } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import InkText from "@/components/InkText";
 import AgentTerminal from "@/components/AgentTerminal";
+import TypedSignal from "@/components/TypedSignal";
 
 export default function Machine() {
   return (
     <SectionShell id="machine" inverted className="py-28 sm:py-36">
       <FieldLabel inverted>Field Note 02 — The Machine</FieldLabel>
+      <TypedSignal text="openclaw mesh online // 11 agents" inverted className="mb-10" />
 
       <div className="grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-7">
@@ -34,9 +36,8 @@ export default function Machine() {
           </Reveal>
         </div>
 
-        {/* live agent roster */}
         <Reveal delay={0.15} className="lg:col-span-4 lg:col-start-9">
-          <div className="rounded-xl border border-paper/15 p-6">
+          <div className="border-y border-paper/15 py-6">
             <p className="eyebrow mb-5 flex items-center gap-2 text-paper/50">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60" />

@@ -1,6 +1,6 @@
 "use client";
 
-import { createElement, useRef, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, SplitText, registerGsap, prefersReducedMotion } from "@/lib/gsap";
 
@@ -37,7 +37,10 @@ export default function Kinetic({
   start = "top 82%",
   delay = 0,
 }: KineticProps) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement | null>(null);
+  const setRef = (node: HTMLElement | null) => {
+    ref.current = node;
+  };
 
   useGSAP(
     () => {
@@ -85,9 +88,10 @@ export default function Kinetic({
     { scope: ref, dependencies: [text] }
   );
 
-  return createElement(
-    as,
-    { ref, className: ["kinetic", className].filter(Boolean).join(" ") },
-    children ?? text
-  );
+  const kineticClassName = ["kinetic", className].filter(Boolean).join(" ");
+  const content = children ?? text;
+  if (as === "h1") return <h1 ref={setRef} className={kineticClassName}>{content}</h1>;
+  if (as === "h3") return <h3 ref={setRef} className={kineticClassName}>{content}</h3>;
+  if (as === "span") return <span ref={setRef} className={kineticClassName}>{content}</span>;
+  return <h2 ref={setRef} className={kineticClassName}>{content}</h2>;
 }

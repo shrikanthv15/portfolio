@@ -1,6 +1,6 @@
 "use client";
 
-import { createElement, useRef, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, SplitText, registerGsap, prefersReducedMotion } from "@/lib/gsap";
 
@@ -37,7 +37,10 @@ export default function InkText({
   start?: string;
   end?: string;
 }) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement | null>(null);
+  const setRef = (node: HTMLElement | null) => {
+    ref.current = node;
+  };
 
   useGSAP(
     () => {
@@ -75,5 +78,8 @@ export default function InkText({
     { scope: ref, dependencies: [text] }
   );
 
-  return createElement(as, { ref, className }, children ?? text);
+  const content = children ?? text;
+  if (as === "p") return <p ref={setRef} className={className}>{content}</p>;
+  if (as === "h3") return <h3 ref={setRef} className={className}>{content}</h3>;
+  return <h2 ref={setRef} className={className}>{content}</h2>;
 }

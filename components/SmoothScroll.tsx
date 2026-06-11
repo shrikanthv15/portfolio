@@ -11,15 +11,18 @@ import { gsap, ScrollTrigger, registerGsap } from "@/lib/gsap";
  * prefers-reduced-motion (native scroll, no hijack).
  */
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
-  const [reduce, setReduce] = useState(false);
+  const [reduce, setReduce] = useState<boolean | null>(null);
   const lenisRef = useRef<LenisRef>(null);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduce(mq.matches);
     const onChange = () => setReduce(mq.matches);
+    const timer = window.setTimeout(onChange, 0);
     mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+    return () => {
+      window.clearTimeout(timer);
+      mq.removeEventListener("change", onChange);
+    };
   }, []);
 
   useEffect(() => {
@@ -65,7 +68,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     };
   }, [reduce]);
 
-  if (reduce) return <>{children}</>;
+  if (reduce !== false) return <>{children}</>;
 
   return (
     <ReactLenis

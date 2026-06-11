@@ -1,6 +1,7 @@
 import { about, profile } from "@/lib/content";
 import { SectionShell, FieldLabel } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
+import TypedSignal from "@/components/TypedSignal";
 
 export default function About() {
   const facts: [string, string][] = [
@@ -13,6 +14,7 @@ export default function About() {
   return (
     <SectionShell id="who" className="py-24 sm:py-32">
       <FieldLabel>Field Note 01 — Who</FieldLabel>
+      <TypedSignal text="profile loaded // production AI engineer" className="mb-10" />
 
       <div className="grid gap-12 lg:grid-cols-12">
         {/* main column */}

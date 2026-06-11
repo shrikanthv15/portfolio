@@ -14,9 +14,12 @@ export default function HeroGrain() {
   const [still, setStill] = useState(true); // assume static until we confirm capability
 
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const lowPower = (navigator.hardwareConcurrency ?? 8) <= 4;
-    setStill(reduce || lowPower);
+    const timer = window.setTimeout(() => {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const lowPower = (navigator.hardwareConcurrency ?? 8) <= 4;
+      setStill(reduce || lowPower);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   return (

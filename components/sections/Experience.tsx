@@ -2,6 +2,7 @@ import { SectionShell, FieldLabel, Tag } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import { experience } from "@/lib/content";
 import CountUp from "@/components/CountUp";
+import TypedSignal from "@/components/TypedSignal";
 
 // Measured outcomes pulled from the résumé — the numbers tick up on scroll.
 const STATS: { value: number; prefix?: string; suffix: string; label: string }[] = [
@@ -23,6 +24,7 @@ export default function Experience() {
   return (
     <SectionShell id="experience" className="py-24 sm:py-32">
       <FieldLabel>FIELD NOTE 04 — TRACK RECORD</FieldLabel>
+      <TypedSignal text="outcomes verified // roles and rooms" className="mb-10" />
 
       <Reveal>
         <p className="measure font-display text-2xl leading-snug text-ink sm:text-3xl">

@@ -1,6 +1,6 @@
 "use client";
 
-import { createElement, useRef } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, registerGsap, prefersReducedMotion } from "@/lib/gsap";
 
@@ -22,7 +22,10 @@ export default function Decrypt({
   start?: string;
   chars?: string;
 }) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement | null>(null);
+  const setRef = (node: HTMLElement | null) => {
+    ref.current = node;
+  };
 
   useGSAP(
     () => {
@@ -40,5 +43,8 @@ export default function Decrypt({
     { scope: ref, dependencies: [text] }
   );
 
-  return createElement(as, { ref, className }, text);
+  if (as === "p") return <p ref={setRef} className={className}>{text}</p>;
+  if (as === "h2") return <h2 ref={setRef} className={className}>{text}</h2>;
+  if (as === "h3") return <h3 ref={setRef} className={className}>{text}</h3>;
+  return <span ref={setRef} className={className}>{text}</span>;
 }

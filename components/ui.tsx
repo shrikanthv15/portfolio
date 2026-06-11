@@ -26,8 +26,7 @@ export function SectionShell({
         className,
       ].join(" ")}
     >
-      {/* the mascot rides the right edge of this container */}
-      <div className="mx-auto w-full max-w-6xl" data-mascot-platform data-mascot-key={id}>
+      <div className="mx-auto w-full max-w-6xl">
         {children}
       </div>
     </section>

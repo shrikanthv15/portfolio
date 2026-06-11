@@ -1,12 +1,11 @@
 import localFont from "next/font/local";
-import { Geist_Mono, Caveat } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 
 /**
  * Type system.
  * - Display: Clash Display (Fontshare, self-hosted) — bold, smooth, premium editorial.
  * - Body: Satoshi (Fontshare, self-hosted) — clean neutral sans.
  * - Mono: Geist Mono (labels, code, terminal).
- * - Hand: Caveat — the handwritten project notes.
  * All self-hosted/build-time (next/font) so nothing depends on a runtime CDN.
  */
 export const display = localFont({
@@ -33,12 +32,5 @@ export const body = localFont({
 export const mono = Geist_Mono({
   subsets: ["latin"],
   variable: "--ff-mono",
-  display: "swap",
-});
-
-export const hand = Caveat({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--ff-hand",
   display: "swap",
 });

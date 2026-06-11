@@ -25,8 +25,8 @@ export default function AgentTerminal() {
     const el = ref.current;
     if (!el) return;
     if (prefersReducedMotion()) {
-      setOut(LINES);
-      return;
+      const timer = window.setTimeout(() => setOut(LINES), 0);
+      return () => clearTimeout(timer);
     }
     const timers: number[] = [];
     let started = false;

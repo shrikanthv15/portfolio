@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { SectionShell, FieldLabel } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import { skills } from "@/lib/content";
+import TypedSignal from "@/components/TypedSignal";
 
 /**
  * Field Note 06 — Toolkit.
@@ -34,6 +35,7 @@ export default function Skills() {
   return (
     <SectionShell id="skills" className="py-24 sm:py-32">
       <FieldLabel>Field Note 06 — Toolkit</FieldLabel>
+      <TypedSignal text="toolkit loaded // agents, data, delivery" className="mb-10" />
 
       <Reveal>
         <p className="display-md measure-tight text-ink">

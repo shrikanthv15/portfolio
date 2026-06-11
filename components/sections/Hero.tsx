@@ -47,8 +47,6 @@ export default function Hero() {
 
         <motion.div
           style={zoomStyle}
-          data-mascot-platform
-          data-mascot-key="top"
           className="will-zoom relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center"
         >
           {/* journal masthead */}

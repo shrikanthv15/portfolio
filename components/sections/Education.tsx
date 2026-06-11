@@ -2,6 +2,7 @@ import { SectionShell, FieldLabel } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import InkText from "@/components/InkText";
 import { education, achievements } from "@/lib/content";
+import TypedSignal from "@/components/TypedSignal";
 
 /**
  * Field Note 05 — Foundations.
@@ -13,6 +14,7 @@ export default function Education() {
   return (
     <SectionShell id="education" className="py-24 sm:py-32">
       <FieldLabel>FIELD NOTE 05 — FOUNDATIONS</FieldLabel>
+      <TypedSignal text="foundations indexed // UMD + IIT Madras" className="mb-10" />
 
       <InkText as="h2" className="display-lg max-w-[18ch]">
         Where the <span className="text-signal">groundwork</span> was laid.

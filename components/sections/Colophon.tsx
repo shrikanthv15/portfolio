@@ -2,11 +2,13 @@ import { profile } from "@/lib/content";
 import { SectionShell, FieldLabel } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import InkText from "@/components/InkText";
+import TypedSignal from "@/components/TypedSignal";
 
 export default function Colophon() {
   return (
     <SectionShell id="contact" className="py-28 sm:py-36">
       <FieldLabel>Colophon — Get in touch</FieldLabel>
+      <TypedSignal text="handoff ready // build loop open" className="mb-10" />
 
       <InkText as="h2" className="display-lg max-w-[16ch]">
         Let&apos;s build something that{" "}

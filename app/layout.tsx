@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { MotionConfig } from "motion/react";
 import "./globals.css";
-import { display, body, mono, hand } from "./fonts";
+import { display, body, mono } from "./fonts";
 import SmoothScroll from "@/components/SmoothScroll";
 import { profile } from "@/lib/content";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://shrikanthv.vercel.app";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://portfolio-nine-gules-47.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -48,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable} ${mono.variable} ${hand.variable}`}
+      className={`${display.variable} ${body.variable} ${mono.variable}`}
     >
       <body className="grain min-h-dvh">
         <div className="scroll-progress" aria-hidden />

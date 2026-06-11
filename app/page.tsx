@@ -9,7 +9,6 @@ import Skills from "@/components/sections/Skills";
 import Colophon from "@/components/sections/Colophon";
 import AgentEasterEgg from "@/components/AgentEasterEgg";
 import CursorRoot from "@/components/CursorRoot";
-import KratosCompanion from "@/components/mascot/KratosCompanion";
 
 export default function Home() {
   return (
@@ -27,7 +26,6 @@ export default function Home() {
       </main>
       <AgentEasterEgg />
       <CursorRoot />
-      <KratosCompanion />
     </>
   );
 }

@@ -25,8 +25,8 @@ export default function Typewriter({
 
   useEffect(() => {
     if (prefersReducedMotion()) {
-      setText(phrases[0] ?? "");
-      return;
+      const timer = window.setTimeout(() => setText(phrases[0] ?? ""), 0);
+      return () => clearTimeout(timer);
     }
     let i = 0;
     let char = 0;

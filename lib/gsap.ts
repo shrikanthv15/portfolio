@@ -3,7 +3,7 @@
 /**
  * Centralized GSAP registration. ScrollTrigger drives scrubbed/pinned scroll;
  * SplitText powers kinetic headline reveals; ScrambleText powers decrypt/typing
- * effects; DrawSVG animates the mascot's doodle strokes. gsap 3.13+ ships all
+ * effects; DrawSVG is available for editorial line work. gsap 3.13+ ships all
  * of these free — no Club license needed.
  */
 import { gsap } from "gsap";
@@ -37,7 +37,7 @@ export function prefersReducedMotion() {
   );
 }
 
-/** True on touch / coarse-pointer devices — disable cursor + magnetism + mascot wander. */
+/** True on touch / coarse-pointer devices — disable cursor + magnetism. */
 export function isCoarsePointer() {
   return (
     typeof window !== "undefined" &&
