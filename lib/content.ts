@@ -43,9 +43,8 @@ export const machine = {
 };
 
 // ── Field Note 03 — Work ───────────────────────────────────────────────────
-// Projects stay journal entries (the editorial layout). Each one pins a small
-// stack of HANDWRITTEN notes — quick glances at the project — that spill out of
-// the entry: tech stack, architecture, what it does, what it actually is, fun fact.
+// Projects stay journal entries: no cards, just project prose, outcomes,
+// stack tags, and compact signal rows.
 export type ProjectNote = { tag: string; text: string };
 
 export type Project = {

@@ -26,6 +26,13 @@ export function SectionShell({
         className,
       ].join(" ")}
     >
+      <span
+        aria-hidden
+        className={[
+          "section-rule absolute left-6 right-6 top-0 h-px origin-left sm:left-10 sm:right-10 lg:left-16 lg:right-16",
+          inverted ? "bg-paper/15" : "bg-rule",
+        ].join(" ")}
+      />
       <div className="mx-auto w-full max-w-6xl">
         {children}
       </div>

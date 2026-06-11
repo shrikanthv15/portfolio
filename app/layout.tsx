@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { MotionConfig } from "motion/react";
 import "./globals.css";
 import { display, body, mono } from "./fonts";
-import SmoothScroll from "@/components/SmoothScroll";
 import { profile } from "@/lib/content";
 
 const SITE_URL =
@@ -54,7 +53,7 @@ export default function RootLayout({
       <body className="grain min-h-dvh">
         <div className="scroll-progress" aria-hidden />
         <MotionConfig reducedMotion="user">
-          <SmoothScroll>{children}</SmoothScroll>
+          {children}
         </MotionConfig>
         <script
           type="application/ld+json"

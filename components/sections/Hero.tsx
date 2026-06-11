@@ -1,16 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { profile, about } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
 import Kinetic from "@/components/Kinetic";
 import Typewriter from "@/components/Typewriter";
-import Magnetic from "@/components/Magnetic";
 import HeartbeatPill from "@/components/HeartbeatPill";
-
-const HeroGrain = dynamic(() => import("@/components/HeroGrain"), { ssr: false });
 
 export default function Hero() {
   const reduce = useReducedMotion();
@@ -24,16 +20,14 @@ export default function Hero() {
   });
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.32]);
   const opacity = useTransform(scrollYProgress, [0, 0.62], [1, 0]);
-  const blur = useTransform(scrollYProgress, [0, 0.62], [0, 6]);
-  const blurFilter = useTransform(blur, (b) => `blur(${b}px)`);
   const cueOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
 
-  const zoomStyle = reduce ? undefined : { scale, opacity, filter: blurFilter };
+  const zoomStyle = reduce ? undefined : { scale, opacity };
 
   return (
     <section id="top" ref={ref} className="relative h-[160vh]">
       <div className="sticky top-0 flex h-dvh flex-col justify-between overflow-hidden px-6 pb-10 pt-32 sm:px-10 lg:px-16">
-        {/* one tasteful 3D moment — grain wash (CSS gradient is the fallback under it) */}
+        {/* Static paper wash: no WebGL, canvas, or scroll-time shader work. */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-0"
@@ -41,9 +35,7 @@ export default function Hero() {
             background:
               "radial-gradient(120% 120% at 28% 18%, #f6f3ec 0%, #efe9dd 55%, #e6dfce 100%)",
           }}
-        >
-          {!reduce && <HeroGrain />}
-        </div>
+        />
 
         <motion.div
           style={zoomStyle}
@@ -105,23 +97,19 @@ export default function Hero() {
             className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-4"
             immediate
           >
-            <Magnetic>
-              <a
-                href="#work"
-                className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-transform hover:-translate-y-0.5"
-              >
-                See the work
-                <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
-              </a>
-            </Magnetic>
-            <Magnetic>
-              <a
-                href={profile.resumeUrl}
-                className="inline-flex items-center gap-2 rounded-full border border-ink/25 px-6 py-3 text-sm font-medium transition-colors hover:border-ink"
-              >
-                Résumé <span aria-hidden>↓</span>
-              </a>
-            </Magnetic>
+            <a
+              href="#work"
+              className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-transform hover:-translate-y-0.5"
+            >
+              See the work
+              <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+            </a>
+            <a
+              href={profile.resumeUrl}
+              className="inline-flex items-center gap-2 rounded-full border border-ink/25 px-6 py-3 text-sm font-medium transition-colors hover:border-ink"
+            >
+              Résumé <span aria-hidden>↓</span>
+            </a>
             <HeartbeatPill />
           </Reveal>
         </motion.div>

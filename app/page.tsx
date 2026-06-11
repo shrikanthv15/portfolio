@@ -7,8 +7,6 @@ import Experience from "@/components/sections/Experience";
 import Education from "@/components/sections/Education";
 import Skills from "@/components/sections/Skills";
 import Colophon from "@/components/sections/Colophon";
-import AgentEasterEgg from "@/components/AgentEasterEgg";
-import CursorRoot from "@/components/CursorRoot";
 
 export default function Home() {
   return (
@@ -24,8 +22,6 @@ export default function Home() {
         <Skills />
         <Colophon />
       </main>
-      <AgentEasterEgg />
-      <CursorRoot />
     </>
   );
 }

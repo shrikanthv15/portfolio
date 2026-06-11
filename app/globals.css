@@ -21,11 +21,6 @@
   --ease-soft: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-/* body bg/color tween smoothly when chapters shift the palette */
-html {
-  transition: background-color 0.8s var(--ease-soft);
-}
-
 :root {
   color-scheme: light;
 }
@@ -163,13 +158,8 @@ body {
 
 /* hint the compositor for the pinned hero zoom */
 .will-zoom {
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
   transform-origin: 50% 42%;
-}
-
-/* magnetic / interactive affordance */
-.magnetic {
-  will-change: transform;
 }
 
 /* ---- typewriter caret ---- */
@@ -183,39 +173,6 @@ body {
 @keyframes caret-blink {
   0%, 50% { opacity: 1; }
   50.01%, 100% { opacity: 0; }
-}
-
-/* ---- custom ink cursor ---- */
-.cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 12px;
-  height: 12px;
-  margin: -6px 0 0 -6px;
-  border-radius: 50%;
-  background: var(--color-ink);
-  mix-blend-mode: difference;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0;
-  will-change: transform;
-  transition: width 0.25s var(--ease-out-expo), height 0.25s var(--ease-out-expo),
-    margin 0.25s var(--ease-out-expo), background-color 0.25s ease;
-}
-.cursor-dot--lg {
-  width: 46px;
-  height: 46px;
-  margin: -23px 0 0 -23px;
-  background: var(--color-signal);
-}
-/* hide native cursor only once the custom one is live (JS-gated = safe fallback) */
-@media (hover: hover) and (pointer: fine) {
-  html.has-cursor,
-  html.has-cursor a,
-  html.has-cursor button {
-    cursor: none;
-  }
 }
 
 /* ---- agent terminal ---- */
@@ -233,6 +190,23 @@ body {
   min-height: 1.45em;
   overflow: hidden;
   text-wrap: balance;
+}
+
+/* ---- section division animation ---- */
+.section-rule {
+  transform: scaleX(0);
+}
+@supports (animation-timeline: view()) {
+  .section-rule {
+    animation: section-rule-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+}
+@keyframes section-rule-draw {
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* ---- field-label hairline draws in as it enters view (native, zero JS) ---- */
