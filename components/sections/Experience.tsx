@@ -6,10 +6,10 @@ import TypedSignal from "@/components/TypedSignal";
 
 // Measured outcomes pulled from the résumé — the numbers tick up on scroll.
 const STATS: { value: number; prefix?: string; suffix: string; label: string }[] = [
+  { value: 87.5, suffix: "%", label: "release-advisor accuracy, zero false-ready" },
+  { value: 33, suffix: "", label: "business flows on one approval ladder" },
   { value: 35, suffix: "%", label: "faster clinical review" },
   { value: 90, suffix: "%+", label: "queries resolved autonomously" },
-  { value: 100, suffix: "+", label: "diagnostic reports parsed" },
-  { value: 11, suffix: "", label: "agents running in production" },
 ];
 
 /**

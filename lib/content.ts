@@ -1,14 +1,14 @@
 // Single source of truth for portfolio content.
-// Authoritative source: "Shrikanth Vilvadrinath Resume 2026.pdf" (2026-06-09),
+// Authoritative source: "Shrikanth_Vilvadrinath_AI_Systems_Engineer_ATT.pdf" (2026-07-31),
 // cross-checked with GitHub. Old-site broken links (wrong GH username, mismatched
 // email) are FIXED here.
 
 export const profile = {
   name: "Shrikanth Vilvadrinath",
   shortName: "Shrikanth",
-  role: "AI Engineer",
+  role: "AI Systems Engineer",
   tagline: "An AI built this site. I built the AI.",
-  location: "Washington, DC",
+  location: "Dallas, TX",
   email: "shri15@terpmail.umd.edu",
   github: "https://github.com/shrikanthv15",
   githubHandle: "shrikanthv15",
@@ -19,9 +19,9 @@ export const profile = {
 // First-person, specific voice — built from the resume summary.
 export const about = {
   lede:
-    "I build production autonomous systems — agentic mortgage platforms, manufacturing ERPs, clinical AI pipelines, and live agent-to-agent networks that run without me in the room.",
+    "I build enterprise agentic systems — for lending, procure-to-pay, and air-gapped regulated platforms — that keep running when nobody is in the room.",
   body: [
-    "I'm an AI engineer finishing an MS in Data Science at the University of Maryland (4.0), after IIT Madras and an engineering degree in Ahmedabad. My work is multi-agent orchestration — LangGraph workflows, Temporal-backed pipelines, MCP servers, and A2A agent teams.",
+    "I'm an AI systems engineer finishing an MS in Data Science at the University of Maryland (4.0), after IIT Madras and an engineering degree in Ahmedabad. The work I care about is context engineering — LangGraph and MCP orchestration, RAG and vector search, session and context management — running on distributed Temporal workflows across AWS, Docker and CI/CD.",
     "I care about the unglamorous parts: durability, recoverability, interpretability, and systems that fail gracefully at 3am. The fun part is when a fleet of agents ships real work while I sleep.",
   ],
 };
@@ -84,30 +84,49 @@ export const projects: Project[] = [
     stamp: "PRODUCTION",
     blurb:
       "A multi-tenant mortgage platform that takes a borrower from application through AI document review, income verification, and underwriting decisioning — role-specific portals, ULDD compliance export, and multi-investor rate pricing. Built end-to-end at Confer Solutions AI.",
-    outcome: "Every origination stage made durable and fully recoverable via Temporal.",
+    outcome:
+      "Four independently signaled Temporal phase workflows with three blocking human gates over 12 lifecycle gates — auto-clear only above 0.90 confidence, and stall detection that scopes a failure to one phase.",
     stack: ["Next.js", "TypeScript", "Temporal.io", "LangGraph", "MCP", "Supabase", "BullMQ"],
     notes: [
       { tag: "stack", text: "Next.js · Temporal.io · LangGraph · 4× MCP servers · Supabase · BullMQ · Redis" },
-      { tag: "architecture", text: "Temporal workflows per origination stage; MCP servers for doc retrieval, data extraction & encrypted multi-party email." },
+      { tag: "architecture", text: "Four MCP servers behind a LiteLLM gateway, so every agent stays portable across Anthropic, OpenAI and local models." },
       { tag: "what it does", text: "Application → AI doc review → income verification → underwriting decision, across role-specific portals." },
       { tag: "what it is, really", text: "A loan officer, an underwriter and a compliance team — compressed into a recoverable state machine." },
-      { tag: "fun fact", text: "ULDD compliance export + multi-investor rate pricing, the parts nobody puts in a demo." },
+      { tag: "fun fact", text: "The work-assignment engine routes loans four ways — including an O(1) round-robin pointer keyed on (role, organization)." },
     ],
   },
   {
-    title: "StoneFactory ERP",
+    title: "Change Management & Release Governance — IL5/IL6 Air-Gapped",
     year: "2026",
     stamp: "PRODUCTION",
     blurb:
-      "A full manufacturing ERP — sales orders, purchasing, CRM, production planning, inventory, wastage tracking, and multi-level approvals — plus a React Native PWA giving field teams real-time production access from the factory floor. The second production platform I shipped at Confer Solutions AI.",
-    outcome: "One system from sales order to shop floor, on web and mobile.",
-    stack: ["Next.js", "Fastify", "Drizzle", "Redis", "Turborepo", "React Native (Expo)"],
+      "A release-governance platform for an air-gapped IL5/IL6 enclave with no egress. Layered Terraform provisions the AWS environment under a fixed IAM permission boundary, and a nine-step Temporal workflow carries a signed 163 MB image all the way in — preflight, Zarf packaging, cosign signing, OCI push, migration, deploy, health verification and drift scan.",
+    outcome:
+      "Five agents scored on a real eval harness — the release advisor verified at 87.5% accuracy with zero false-ready calls.",
+    stack: ["Terraform", "AWS (VPC, EC2, IAM)", "Temporal.io", "Langfuse", "Docker", "Gitea", "Ollama", "Next.js"],
     notes: [
-      { tag: "stack", text: "Next.js · Fastify · Drizzle · Redis · Turborepo · React Native (Expo)" },
-      { tag: "architecture", text: "Turborepo monorepo; Fastify + Drizzle services; a PWA client for the floor." },
-      { tag: "what it does", text: "Sales → purchasing → production planning → inventory & wastage → multi-level approvals." },
-      { tag: "what it is, really", text: "The boring-but-load-bearing software a real factory runs its day on." },
-      { tag: "fun fact", text: "Field teams check live production from their phones — offline-tolerant PWA." },
+      { tag: "stack", text: "Terraform · AWS (VPC, EC2, IAM) · Temporal · Langfuse · Docker · Gitea · Ollama" },
+      { tag: "architecture", text: "Layered Terraform under a fixed IAM boundary; a 9-step Temporal release workflow into an enclave with no egress." },
+      { tag: "what it does", text: "Five agents in parallel — change risk, compliance, process drift, issue intelligence, release advisor — judge whether a release is safe." },
+      { tag: "what it is, really", text: "The change-advisory board, as software, for a network that cannot phone home." },
+      { tag: "fun fact", text: "Scored on macro F1, QWK and safety recall against labelled examples — 87.5% accurate, and never once called a bad release ready." },
+    ],
+  },
+  {
+    title: "Procure-to-Pay ERP",
+    year: "2026",
+    stamp: "PRODUCTION",
+    blurb:
+      "A multi-tenant procure-to-pay ERP built on one signal-driven Temporal approval ladder, assembled at runtime from an approval-matrix table — maker-checker, N-of-M quorum and 24/48/72-hour SLA escalation serving all 33 business flows over a Postgres carrying 80 row-level-security policies. New approval rules ship as configuration, with no redeploy.",
+    outcome:
+      "A photographed goods-receipt note is parsed on CPU in ~98s and matched to its purchase order across a 15-field schema; anything under 0.75 confidence routes to a human, so nothing unverified reaches the ledger.",
+    stack: ["TypeScript", "NestJS", "Temporal.io", "PostgreSQL (RLS)", "Drizzle", "Docling", "Docker", "GitHub Actions"],
+    notes: [
+      { tag: "stack", text: "TypeScript · NestJS · Temporal · PostgreSQL (RLS) · Drizzle · Docling · Docker" },
+      { tag: "architecture", text: "One signal-driven Temporal approval ladder, assembled at runtime from an approval-matrix table." },
+      { tag: "what it does", text: "Serves all 33 business flows with maker-checker, N-of-M quorum and 24/48/72-hour SLA escalation." },
+      { tag: "what it is, really", text: "Every approval policy a company argues about, expressed once as data instead of code." },
+      { tag: "fun fact", text: "80 row-level-security policies keep tenants apart; new approval rules ship as config, no redeploy." },
     ],
   },
   {
@@ -177,15 +196,16 @@ export const experience: Job[] = [
   {
     org: "Confer Solutions AI",
     role: "AI Engineer",
-    period: "Jan 2026 — May 2026",
-    place: "Remote",
+    period: "Jan 2026 — Present",
+    place: "Dallas, TX",
     detail:
-      "Built two production agentic platforms end-to-end.",
+      "Building enterprise agentic systems for lending, procure-to-pay and air-gapped regulated platforms.",
     highlights: [
       "Agentic Loan Origination System: a multi-tenant mortgage platform taking a borrower from application through AI document review, income verification, and underwriting decisioning — role-specific portals, ULDD compliance export, multi-investor rate pricing. Four MCP servers handle document retrieval, mortgage data extraction, and encrypted multi-party email; Temporal workflows make every origination stage durable and fully recoverable.",
-      "StoneFactory ERP: a full manufacturing ERP — sales orders, purchasing, CRM, production planning, inventory, wastage tracking, and multi-level approvals — plus a React Native PWA giving field teams real-time production access.",
+      "Change Management & Release Governance (IL5/IL6, air-gapped): layered Terraform under a fixed IAM permission boundary, and a nine-step Temporal release workflow moving signed 163 MB images into an enclave with no egress. Five agents run in parallel — change risk, compliance, process drift, issue intelligence, release advisor — scored on macro F1, QWK and safety recall against labelled examples and traced to a self-hosted Langfuse; the release advisor verified at 87.5% accuracy with zero false-ready calls.",
+      "Procure-to-Pay ERP: one signal-driven Temporal approval ladder assembled at runtime from an approval-matrix table, serving all 33 business flows with maker-checker, N-of-M quorum and 24/48/72-hour SLA escalation over a multi-tenant Postgres carrying 80 row-level-security policies. A photographed goods-receipt note parses on CPU in ~98s and matches its purchase order across a 15-field schema, with anything under 0.75 confidence routed to review.",
     ],
-    stack: ["Next.js", "TypeScript", "Temporal.io", "LangGraph", "Supabase", "BullMQ", "Redis", "Turborepo", "Fastify", "Drizzle"],
+    stack: ["LangGraph", "LangChain", "MCP", "Temporal.io", "LiteLLM", "Terraform", "AWS", "NestJS", "PostgreSQL (RLS)", "Langfuse", "Next.js"],
   },
   {
     org: "NV Rad Imaging",
@@ -241,16 +261,30 @@ export const achievements = [
 ];
 
 export const skills: { group: string; items: string[] }[] = [
-  { group: "Languages", items: ["TypeScript", "Python", "Java", "C++", "SQL", "R"] },
+  { group: "Languages", items: ["Python", "TypeScript", "SQL", "Bash"] },
   {
-    group: "AI / Agents",
-    items: ["LangGraph", "Temporal.io", "OpenClaw", "MCP", "A2A Communication", "Agent Teams", "Langfuse", "Vercel AI SDK", "@ai-sdk (Anthropic / OpenAI)"],
+    group: "Agentic AI",
+    items: ["LangGraph", "LangChain", "LangSmith", "MCP (Model Context Protocol)", "A2A", "Temporal.io", "Vercel AI SDK", "Multi-agent orchestration", "Tool calling", "Anthropic / OpenAI / Ollama"],
   },
-  { group: "Web", items: ["Next.js", "React", "Fastify", "FastAPI", "Flask", "Django", "React Native (Expo)"] },
-  { group: "ML / Data", items: ["PyTorch", "TensorFlow", "scikit-learn", "Pandas"] },
+  {
+    group: "Context engineering",
+    items: ["RAG pipelines", "Vector search", "Session & context management", "Prompt engineering", "Confidence thresholds", "Human-in-the-loop gating"],
+  },
+  {
+    group: "Evaluation",
+    items: ["Langfuse", "Agent eval harnesses", "Macro F1 / accuracy / QWK", "Safety recall", "Playwright"],
+  },
+  {
+    group: "Backend",
+    items: ["FastAPI", "Flask", "Django", "NestJS", "Fastify", "SQLAlchemy", "Drizzle", "REST", "WebSockets"],
+  },
+  {
+    group: "Data",
+    items: ["PostgreSQL (RLS, multi-tenant)", "Supabase", "Redis", "pgvector", "Qdrant"],
+  },
   {
     group: "Cloud / Infra",
-    items: ["AWS (S3, SageMaker)", "GCP", "PostgreSQL", "Supabase", "Redis", "Docker", "Turborepo", "Vercel", "DigitalOcean", "Kafka"],
+    items: ["AWS (EC2, S3, VPC, IAM)", "Terraform", "Docker", "GitHub Actions CI/CD", "LiteLLM"],
   },
 ];
 

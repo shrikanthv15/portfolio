@@ -5,7 +5,7 @@ import TypedSignal from "@/components/TypedSignal";
 
 export default function About() {
   const facts: [string, string][] = [
-    ["Now", "AI Engineer"],
+    ["Now", "AI Systems Engineer"],
     ["Based", profile.location],
     ["Studying", "MS Data Science · UMD (4.0)"],
     ["Obsessed with", "agents that ship while I sleep"],
